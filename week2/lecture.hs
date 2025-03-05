@@ -1,11 +1,10 @@
 mylen :: [a] -> Int
 mylen l = if null l then 0 else 1 + mylen (tail l) 
 
-count x l = if null l
-               then 0
-               else
-                    let remainingX = count x (tail l) in
-                    if head l == x then 1 + remainingX else remainingX
+count :: (Num a, Eq a) => a -> [a] -> a
+count x [] = 0
+count x l = count x (tail l) + if head l == x then 1 else 0
+                    
 
 onlyevens :: Integral a => [a] -> [a]
 onlyevens l = if mylen l == 0
@@ -19,7 +18,7 @@ onlyevens l = if mylen l == 0
                     if not isEven then restEvens else curr:restEvens
 
 
--- merge l1 l2 taka che da se reduvat, kato pochvame ot l1
+-- merge l1 l2 so that they cycle, but we start from l1
 merge :: [a] -> [a] -> [a]
 -- Either we have bool parameter, who is on turn or hear me out, we swap the arrays, so that we take only from the first array
 merge l1 l2 = if null l1 && null l2
@@ -32,3 +31,11 @@ merge l1 l2 = if null l1 && null l2
                             restOfL1 = tail l1
                             rest = merge l2 restOfL1 in
                         curr:rest   
+
+myElem :: (Eq a) => a -> [a] -> Bool
+myElem x [] = False
+myElem x (h:rest) = if x == h then True else myElem x rest
+
+mySum :: (Num a) => [a] -> a
+mySum [] = 0
+mySum (x:xs) = x + mySum xs
