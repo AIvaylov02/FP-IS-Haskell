@@ -1,6 +1,7 @@
 # Ignore all files
 *
 # Only keep track of files, which are haskell source
+!*.sh
 !*.hs
 # and their directories (week<MN>)
 !*/
